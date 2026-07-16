@@ -379,9 +379,12 @@ class ProductController {
     }
 
     private function getBaseHostUrl() {
-        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "http" : "http";
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https" : "http";
         $host = $_SERVER['HTTP_HOST'];
-        return $protocol . '://' . $host . '/FARMMASTER-Backend';
+        $dir = dirname($_SERVER['SCRIPT_NAME'] ?? '');
+        $dir = str_replace('\\', '/', $dir);
+        $dir = rtrim($dir, '/');
+        return $protocol . '://' . $host . $dir;
     }
 }
 
